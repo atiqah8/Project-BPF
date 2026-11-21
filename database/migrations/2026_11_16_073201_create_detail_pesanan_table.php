@@ -20,7 +20,7 @@ return new class extends Migration
         $t->string('catatan_item')->nullable();
     });
     }
-    public function down(): void { Schema::dropIfExists('detail_pesanan'); }
+   
 
     /**
      * Reverse the migrations.

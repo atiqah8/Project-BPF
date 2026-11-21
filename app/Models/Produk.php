@@ -11,7 +11,7 @@ class Produk extends Model
     protected $guarded = [];
 
     public function kategori()  { return $this->belongsTo(KategoriProduk::class, 'id_kategori'); }
-    public function penginput() { return $this->belongsTo(KaryawanInterna::class, 'diinput_oleh'); }
+    public function penginput() { return $this->belongsTo(Karyawan::class, 'diinput_oleh'); }
 
     public function getRouteKeyName()
     {

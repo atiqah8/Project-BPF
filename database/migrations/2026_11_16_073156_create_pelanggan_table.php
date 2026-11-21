@@ -20,8 +20,7 @@ return new class extends Migration
         $t->timestamps();
     });
     }
-    public function down(): void { Schema::dropIfExists('pelanggan'); }
-
+    
     /**
      * Reverse the migrations.
      */

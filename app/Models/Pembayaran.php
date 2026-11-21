@@ -11,7 +11,7 @@ class Pembayaran extends Model
     protected $guarded = [];
 
     public function pesanan()     { return $this->belongsTo(Pesanan::class, 'id_pesanan'); }
-    public function verifikator() { return $this->belongsTo(KaryawanInterna::class, 'diverifikasi_oleh'); }
+    public function verifikator() { return $this->belongsTo(Karyawan::class, 'diverifikasi_oleh'); }
 
     public function getRouteKeyName()
     {

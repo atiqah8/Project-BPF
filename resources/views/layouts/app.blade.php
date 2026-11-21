@@ -1,3 +1,9 @@
+@php
+    $jumlahKeranjang = auth('pelanggan')->check()
+        ? auth('pelanggan')->user()->keranjang()->count()
+        : 0;
+@endphp
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -44,7 +50,7 @@
                 <a href="#"><img src="{{ asset('img/icon/heart.png')}}" alt=""></a>
             </div>
             <div class="offcanvas__cart__item">
-                <a href="#"><img src="{{ asset('img/icon/cart.png')}}" alt=""> <span>0</span></a>
+                <a href="{{ route('keranjang.index') }}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span>{{ $jumlahKeranjang }}</span></a>
                 <div class="cart__price">Cart: <span>$0.00</span></div>
             </div>
         </div>
@@ -54,19 +60,19 @@
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__option">
             <ul>
-                @auth('pelanggan')
-                    <li>Halo, {{ auth('pelanggan')->user()->nama_pelanggan }}</li>
-                    <li>
-                        <form action="{{ route('logout') }}" method="POST" style="display:inline">
-                            @csrf
-                            <button type="submit" class="btn btn-link p-0" style="color:inherit">Logout</button>
-                        </form>
-                    </li>
-                @else
-                    <li><a href="{{ route('login') }}">Masuk</a></li>
-                    <li><a href="{{ route('register') }}">Daftar</a></li>
-                @endauth
-            </ul>
+    @if (auth('pelanggan')->check())
+        <li>Halo, {{ auth('pelanggan')->user()->nama_pelanggan }}</li>
+        <li>
+            <form action="{{ route('logout') }}" method="POST" style="display:inline">
+                @csrf
+                <button type="submit" class="btn btn-link p-0" style="color:inherit">Logout</button>
+            </form>
+        </li>
+    @else
+        <li><a href="{{ route('login') }}">Masuk</a></li>
+        <li><a href="{{ route('register') }}">Daftar</a></li>
+    @endif
+</ul>
         </div>
     </div>
     <!-- Offcanvas Menu End -->
@@ -79,20 +85,20 @@
                     <div class="col-lg-12">
                         <div class="header__top__inner">
                             <div class="header__top__left">
-                                <ul>
-                                    @auth('pelanggan')
-                                        <li>Halo, {{ auth('pelanggan')->user()->nama_pelanggan }}</li>
-                                        <li>
-                                            <form action="{{ route('logout') }}" method="POST" style="display:inline">
-                                                @csrf
-                                                <button type="submit" class="btn btn-link p-0" style="color:inherit">Logout</button>
-                                            </form>
-                                        </li>
-                                    @else
-                                        <li><a href="{{ route('login') }}">Masuk</a></li>
-                                        <li><a href="{{ route('register') }}">Daftar</a></li>
-                                    @endauth
-                                </ul>
+                               <ul>
+    @if (auth('pelanggan')->check())
+        <li>Halo, {{ auth('pelanggan')->user()->nama_pelanggan }}</li>
+        <li>
+            <form action="{{ route('logout') }}" method="POST" style="display:inline">
+                @csrf
+                <button type="submit" class="btn btn-link p-0" style="color:inherit">Logout</button>
+            </form>
+        </li>
+    @else
+        <li><a href="{{ route('login') }}">Masuk</a></li>
+        <li><a href="{{ route('register') }}">Daftar</a></li>
+    @endif
+</ul>
                             </div>
                             <div class="header__logo">
                                 <a href="{{ route('beranda') }}"><img src="{{ asset('img/logo.png')}}" alt=""></a>
@@ -103,7 +109,7 @@
                                     <a href="#"><img src="{{ asset('img/icon/heart.png')}}" alt=""></a>
                                 </div>
                                 <div class="header__top__right__cart">
-                                    <a href="#"><img src="{{ asset('img/icon/cart.png')}}" alt=""> <span>0</span></a>
+                                    <a href="{{ route('keranjang.index') }}"><img src="{{ asset('img/icon/cart.png') }}" alt=""> <span>{{ $jumlahKeranjang }}</span></a>
                                     <div class="cart__price">Keranjang</div>
                                 </div>
                             </div>
@@ -192,10 +198,16 @@
                   <div class="col-lg-5">
                     <div class="copyright__widget">
                         <ul>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
-                            <li><a href="#">Site Map</a></li>
-                        </ul>
+    <li><a href="#">Terms & Conditions</a></li>
+    <li><a href="#">Map</a></li>
+    <li>
+        @if (auth('karyawan')->check())
+            <a href="{{ route('admin.dashboard') }}">Login Karyawan</a>
+        @else
+            <a href="{{ route('karyawan.login') }}">Login Karyawan</a>
+        @endif
+    </li>
+</ul>
                     </div>
                 </div>
             </div>
@@ -227,5 +239,6 @@
 <script src="{{ asset('js/main.js') }}"></script>
 @stack('scripts')
 </body>
+
 
 </html>

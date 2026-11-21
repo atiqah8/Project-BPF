@@ -2,24 +2,24 @@
 
 namespace Database\Seeders;
 
-use App\Models\KaryawanInterna;
+use App\Models\Karyawan;
 use App\Models\KategoriProduk;
 use App\Models\Produk;
 use Illuminate\Database\Seeder;
 
 class DataAwalSeeder extends Seeder
 {
-    public function run($this->call(DataAwalSeeder::class);): void
+    public function run(): void
     {
-        $admin = KaryawanInterna::create([
+        $admin = Karyawan::create([
             'nama_lengkap' => 'Admin Dapuramy', 'username' => 'admin',
             'email' => 'admin@dapuramy.test', 'password_hash' => 'password', 'role' => 'admin',
         ]);
-        KaryawanInterna::create([
+        Karyawan::create([
             'nama_lengkap' => 'Kasir 1', 'username' => 'kasir',
             'email' => 'kasir@dapuramy.test', 'password_hash' => 'password', 'role' => 'kasir_toko',
         ]);
-        KaryawanInterna::create([
+        Karyawan::create([
             'nama_lengkap' => 'Dapur 1', 'username' => 'dapur',
             'email' => 'dapur@dapuramy.test', 'password_hash' => 'password', 'role' => 'staf_dapur',
         ]);

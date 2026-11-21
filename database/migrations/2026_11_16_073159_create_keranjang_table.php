@@ -19,7 +19,7 @@ return new class extends Migration
         $t->timestamps();
     });
     }
-    public function down(): void { Schema::dropIfExists('keranjang'); }
+   
 
     /**
      * Reverse the migrations.

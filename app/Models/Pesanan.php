@@ -15,8 +15,8 @@ class Pesanan extends Model
     ];
 
     public function pelanggan()  { return $this->belongsTo(Pelanggan::class, 'id_pelanggan'); }
-    public function kasir()      { return $this->belongsTo(KaryawanInterna::class, 'diproses_kasir_id'); }
-    public function dapur()      { return $this->belongsTo(KaryawanInterna::class, 'disiapkan_dapur_id'); }
+    public function kasir()      { return $this->belongsTo(Karyawan::class, 'diproses_kasir_id'); }
+    public function dapur()      { return $this->belongsTo(Karyawan::class, 'disiapkan_dapur_id'); }
     public function detail()     { return $this->hasMany(DetailPesanan::class, 'id_pesanan'); }
     public function pembayaran() { return $this->hasOne(Pembayaran::class, 'id_pesanan'); }
 

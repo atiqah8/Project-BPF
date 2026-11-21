@@ -6,26 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void{
-    Schema::create('karyawan', function (Blueprint $t) {
-        $t->id('id_karyawan');
-        $t->string('nama_lengkap');
-        $t->string('username')->unique();
-        $t->string('email')->unique();
-        $t->string('password_hash');
-        $t->enum('role', ['admin', 'kasir_toko', 'staf_dapur']);
-        $t->boolean('status_aktif')->default(true);
-        $t->timestamps();
-    });
+    public function up(): void
+    {
+        Schema::create('karyawan', function (Blueprint $t) {
+            $t->id('id_karyawan');
+            $t->string('nama_lengkap');
+            $t->string('username')->unique();
+            $t->string('email')->unique();
+            $t->string('password_hash');
+            $t->enum('role', ['admin', 'kasir_toko', 'staf_dapur']);
+            $t->boolean('status_aktif')->default(true);
+            $t->timestamps();
+        });
     }
-    public function down(): void { Schema::dropIfExists('karyawan_interna'); }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('karyawan');

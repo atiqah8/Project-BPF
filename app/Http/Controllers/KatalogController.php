@@ -9,18 +9,30 @@ use Illuminate\Http\Request;
 class KatalogController extends Controller
 {
     public function index(Request $request)
-    {
-        $produk = Produk::with('kategori')
-            ->where('status_tampil', true)
-            ->when($request->kategori, fn ($q, $k) => $q->where('id_kategori', $k))
-            ->when($request->cari, fn ($q, $c) => $q->where('nama_produk', 'like', "%{$c}%"))
-            ->paginate(12)
-            ->withQueryString();
+{
+    $produk = Produk::with('kategori')
+        ->where('status_tampil', true)
+        ->when($request->filled('kategori'), fn ($q) => $q->where('id_kategori', $request->kategori))
+        ->when($request->filled('cari'), function ($q) use ($request) {
+            $kata = trim($request->cari);
 
-        $kategori = KategoriProduk::all();
+            // dikelompokkan dalam satu kurung supaya tidak merusak filter kategori
+            $q->where(function ($sub) use ($kata) {
+                $sub->where('nama_produk', 'like', "%{$kata}%")
+                    ->orWhere('deskripsi_rasa', 'like', "%{$kata}%")
+                    ->orWhereHas('kategori', fn ($k) => $k->where('nama_kategori', 'like', "%{$kata}%"));
+            });
+        })
+        ->latest()
+        ->paginate(12)
+        ->withQueryString();
 
-        return view('katalog.index', compact('produk', 'kategori'));
-    }
+    $kategori = KategoriProduk::withCount([
+        'produk' => fn ($q) => $q->where('status_tampil', true),
+    ])->get();
+
+    return view('katalog.index', compact('produk', 'kategori'));
+}
 
     public function show(Produk $produk)
     {

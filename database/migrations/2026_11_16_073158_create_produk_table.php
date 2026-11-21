@@ -13,7 +13,7 @@ return new class extends Migration
     Schema::create('produk', function (Blueprint $t) {
         $t->id('id_produk');
         $t->foreignId('id_kategori')->constrained('kategori_produk', 'id_kategori');
-        $t->foreignId('diinput_oleh')->constrained('karyawan_interna', 'id_karyawan');
+        $t->foreignId('diinput_oleh')->constrained('karyawan', 'id_karyawan');
         $t->string('nama_produk');
         $t->text('deskripsi_rasa')->nullable();
         $t->decimal('harga', 12, 2);
@@ -26,7 +26,7 @@ return new class extends Migration
         $t->timestamps();
     });
     }
-    public function down(): void { Schema::dropIfExists('produk'); }
+    
 
     /**
      * Reverse the migrations.

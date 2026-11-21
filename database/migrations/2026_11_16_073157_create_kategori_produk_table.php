@@ -16,7 +16,7 @@ return new class extends Migration
         $t->text('deskripsi')->nullable();
     });
     }
-    public function down(): void { Schema::dropIfExists('kategori_produk'); }
+    
 
     /**
      * Reverse the migrations.

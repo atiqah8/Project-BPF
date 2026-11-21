@@ -8,13 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CekRole
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  Closure(Request): (Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
+        $user = auth('karyawan')->user();
+
+        if (!$user || !$user->status_aktif || !in_array($user->role, $roles)) {
+            abort(403, 'Akses ditolak');
+        }
+
         return $next($request);
     }
 }

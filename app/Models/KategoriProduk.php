@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class KategoriProduk extends Model
 {
-    //
+    protected $table = 'kategori_produk';
+    protected $primaryKey = 'id_kategori';
+    public $timestamps = false;
+    protected $guarded = [];
+
+    public function produk() { return $this->hasMany(Produk::class, 'id_kategori'); }
 }

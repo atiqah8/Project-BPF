@@ -9,13 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('pelanggan', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    public function up(): void{
+    Schema::create('pelanggan', function (Blueprint $t) {
+        $t->id('id_pelanggan');
+        $t->string('nama_pelanggan');
+        $t->string('email')->unique();
+        $t->string('no_whatsapp')->unique();
+        $t->string('password_hash');
+        $t->text('alamat_default')->nullable();
+        $t->timestamps();
+    });
     }
+    public function down(): void { Schema::dropIfExists('pelanggan'); }
 
     /**
      * Reverse the migrations.
